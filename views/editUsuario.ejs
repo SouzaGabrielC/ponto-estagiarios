@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Editar <%= usuario.nome %> - Ponto Estagiários</title>
+    <link rel="stylesheet" href="../libs/bootstrap/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <header>
+
+
+        <nav class="navbar navbar-default" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Painel de Controle</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Início</a></li>
+                    <li class="active"><a href="/usuarios">Usuários</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+
+    </header>
+
+    <main class="container">
+
+        <h2>Editar Usuário: <%= usuario.nome %></h2>
+
+        <% if(error){ %>
+
+        <div class="alert alert-danger" id="error-alert">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <span><strong>Erro!</strong> <%= error %></span>
+        </div>
+        
+        <% } %>
+
+        
+        <form action="/usuarios/<%= usuario._id %>" method="POST" role="form">
+            <small class="text-danger">* Campos Obrigatórios</small>
+            <br>
+            <br>
+            <div class="form-group">
+                <label for="">Nome: <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="" placeholder="Digite o nome do usuário" name="nome" value="<%= usuario.nome %>" required>
+            </div>
+            <div class="form-group">
+                <label for="">Usuário: <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="" placeholder="Digite o usuário para login" name="usuario" value="<%= usuario.usuario %>" required>
+            </div>
+            <div class="form-group">
+                <label for="">Senha: <span class="text-danger">*</span></label>
+                <input type="password" class="form-control" id="" placeholder="Digite a senha para o usuário" name="senha" value="<%= usuario.senha %>" required>
+            </div>
+            <div class="form-group">
+                <label for="">Nível de Acesso: <span class="text-danger">*</span></label>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="nivel" id="" value="1" <%= usuario.nivel == 1 ? 'checked="checked"' : '' %> >
+                        Administrador
+                    </label>
+                    <label>
+                        <input type="radio" name="nivel" id="" value="2" <%= usuario.nivel == 2 ? 'checked="checked"' : '' %>>
+                        Usuário
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success btn-lg btn-block">Salvar Alterações</button>
+        </form>
+        
+        <br>
+        <br>
+
+    </main>
+
+    <footer>
+    </footer>
+
+    <script src="../libs/jquery/jquery.min.js"></script>
+    <script src="../libs/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Estagiários - Ponto Estagiários</title>
+    <link rel="stylesheet" href="./libs/bootstrap/css/bootstrap.min.css">
+    <style>
+        .loader {
+            border: 16px solid #f3f3f3;
+            /* Light grey */
+            border-top: 16px solid #3498db;
+            /* Blue */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+        <nav class="navbar navbar-default" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Painel de Controle</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Início</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+
+    </header>
+
+    <main class="container-fluid">
+
+        <h2>Cadastro de Estagiários</h2>
+
+        <% if(error){ %>
+
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <strong>Erro!</strong>
+                <%= error %>
+            </div>
+
+            <% } %>
+
+                <form action="/estagiarios" method="POST" role="form">
+                    <small class="text-danger">* Campos Obrigatórios</small>
+                    <br>
+                    <br>
+                    <div class="form-group">
+                        <label for="">Código: <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="" placeholder="Digite o código do cracha" name="codigo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Nome: <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="" placeholder="Digite o nome" name="nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Setor: <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="" placeholder="Digite o setor" name="setor" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="">E-mail: </label>
+                        <input type="text" class="form-control" id="" placeholder="Digite o e-mail" name="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Data de Nascimento: </label>
+                        <input type="date" class="form-control" id="" name="dtNasc">
+                    </div>
+                    <div class="form-group">
+                        <label for="">R.G.: </label>
+                        <input type="text" class="form-control" id="" placeholder="Digite o R.G" name="rg">
+                    </div>
+                    <div class="form-group">
+                        <label for="">CPF: </label>
+                        <input type="text" class="form-control" id="" placeholder="Digite o CPF" name="cpf">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Data de Admissão: </label>
+                        <input type="date" class="form-control" id="" name="dtAdmissao">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Horário de Trabalho: <span class="text-danger">*</span></label>
+
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Dias</th>
+                                    <th>Entrada 1 <span class="text-danger">*</span></th>
+                                    <th>Saída 1 <span class="text-danger">*</span></th>
+                                    <th>Entrada 2 <span class="text-danger">*</span></th>
+                                    <th>Saída 2 <span class="text-danger">*</span></th>
+                                    <th>Entrada 3</th>
+                                    <th>Saída 3</th>
+                                    <th>Total de Horas <span class="text-danger">*</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><label for="">Segunda</label></td>
+                                    <td><input type="text" name="segE1" class="form-control segunda horarios-field" required></td>
+                                    <td><input type="text" name="segS1" class="form-control segunda horarios-field" required></td>
+                                    <td><input type="text" name="segE2" class="form-control segunda horarios-field" required></td>
+                                    <td><input type="text" name="segS2" class="form-control segunda horarios-field" required></td>
+                                    <td><input type="text" name="segE3" class="form-control segunda horarios-field"></td>
+                                    <td><input type="text" name="segS3" class="form-control segunda horarios-field"></td>
+                                    <td>
+                                        <input type="text" name="segTotal" class="form-control" value="" required="required" readonly>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox">
+                                            <label>
+                                        <input class="folga" type="checkbox" value="true" name="segFolfa">
+                                        Folga
+                                    </label>
+                                            <label>
+                                        <input class="extra" type="checkbox" value="true" name="segExtra">
+                                        Extra
+                                    </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label for="">Terça</label></td>
+                                    <td><input type="text" name="terE1" class="form-control terca horarios-field" required></td>
+                                    <td><input type="text" name="terS1" class="form-control terca horarios-field" required></td>
+                                    <td><input type="text" name="terE2" class="form-control terca horarios-field" required></td>
+                                    <td><input type="text" name="terS2" class="form-control terca horarios-field" required></td>
+                                    <td><input type="text" name="terE3" class="form-control terca horarios-field"></td>
+                                    <td><input type="text" name="terS3" class="form-control terca horarios-field"></td>
+                                    <td>
+                                        <input type="text" name="terTotal" class="form-control" value="" required="required" readonly>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox">
+                                            <label>
+                                        <input class="folga" type="checkbox" value="true" name="terFolga">
+                                        Folga
+                                    </label>
+                                            <label>
+                                        <input class="extra" type="checkbox" value="true" name="terExtra">
+                                        Extra
+                                    </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label for="">Quarta</label></td>
+                                    <td><input type="text" name="quaE1" class="form-control quarta horarios-field" required></td>
+                                    <td><input type="text" name="quaS1" class="form-control quarta horarios-field" required></td>
+                                    <td><input type="text" name="quaE2" class="form-control quarta horarios-field" required></td>
+                                    <td><input type="text" name="quaS2" class="form-control quarta horarios-field" required></td>
+                                    <td><input type="text" name="quaE3" class="form-control quarta horarios-field"></td>
+                                    <td><input type="text" name="quaS3" class="form-control quarta horarios-field"></td>
+                                    <td>
+                                        <input type="text" name="quaTotal" class="form-control" value="" required="required" readonly>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox">
+                                            <label>
+                                        <input class="folga" type="checkbox" value="true" name="quaFolga">
+                                        Folga
+                                    </label>
+                                            <label>
+                                        <input class="extra" type="checkbox" value="true" name="quaExtra">
+                                        Extra
+                                    </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label for="">Quinta</label></td>
+                                    <td><input type="text" name="quiE1" class="form-control quinta horarios-field" required></td>
+                                    <td><input type="text" name="quiS1" class="form-control quinta horarios-field" required></td>
+                                    <td><input type="text" name="quiE2" class="form-control quinta horarios-field" required></td>
+                                    <td><input type="text" name="quiS2" class="form-control quinta horarios-field" required></td>
+                                    <td><input type="text" name="quiE3" class="form-control quinta horarios-field"></td>
+                                    <td><input type="text" name="quiS3" class="form-control quinta horarios-field"></td>
+                                    <td>
+                                        <input type="text" name="quiTotal" class="form-control" value="" required="required" readonly>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox">
+                                            <label>
+                                        <input class="folga" type="checkbox" value="true" name="quiFolga">
+                                        Folga
+                                    </label>
+                                            <label>
+                                        <input class="extra" type="checkbox" value="true" name="quiExtra">
+                                        Extra
+                                    </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label for="">Sexta</label></td>
+                                    <td><input type="text" name="sexE1" class="form-control sexta horarios-field" required></td>
+                                    <td><input type="text" name="sexS1" class="form-control sexta horarios-field" required></td>
+                                    <td><input type="text" name="sexE2" class="form-control sexta horarios-field" required></td>
+                                    <td><input type="text" name="sexS2" class="form-control sexta horarios-field" required></td>
+                                    <td><input type="text" name="sexE3" class="form-control sexta horarios-field"></td>
+                                    <td><input type="text" name="sexS3" class="form-control sexta horarios-field"></td>
+                                    <td>
+                                        <input type="text" name="sexTotal" class="form-control" value="" required="required" readonly>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox">
+                                            <label>
+                                        <input class="folga" type="checkbox" value="true" name="sexFolga">
+                                        Folga
+                                    </label>
+                                            <label>
+                                        <input class="extra" type="checkbox" value="true" name="sexExtra">
+                                        Extra
+                                    </label>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td><label for="">Sábado</label></td>
+                                    <td><input type="text" name="sabE1" class="form-control sabado horarios-field" required></td>
+                                    <td><input type="text" name="sabS1" class="form-control sabado horarios-field" required></td>
+                                    <td><input type="text" name="sabE2" class="form-control sabado horarios-field" required></td>
+                                    <td><input type="text" name="sabS2" class="form-control sabado horarios-field" required></td>
+                                    <td><input type="text" name="sabE3" class="form-control sabado horarios-field"></td>
+                                    <td><input type="text" name="sabS3" class="form-control sabado horarios-field"></td>
+                                    <td>
+                                        <input type="text" name="sabTotal" class="form-control" value="" required="required" readonly>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox">
+                                            <label>
+                                        <input class="folga" type="checkbox" value="true" name="sabFolga">
+                                        Folga
+                                    </label>
+                                            <label>
+                                        <input class="extra" type="checkbox" value="true" name="sabExtra">
+                                        Extra
+                                    </label>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <button type="submit" class="btn btn-success btn-lg">Cadastrar Estagiário</button>
+                </form>
+
+
+                <hr>
+                <h2>Lista de Estagiários</h2>
+                <br>
+
+                <% if(estagiarios != null) { 
+                for(estagiario of estagiarios){ %>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Nome:
+                                <%= estagiario.nome %>
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <ul>
+                                <li>Codigo:
+                                    <%= estagiario.codigo %>
+                                </li>
+                                <li>Setor:
+                                    <%= estagiario.setor %>
+                                </li>
+                                <li>Data Nascimento:
+                                    <% if(estagiario.dtNasc) { %>
+                                        <%= estagiario.dtNasc.getUTCDate() %>/
+                                            <%= estagiario.dtNasc.getUTCMonth() +1%>/
+                                                <%= estagiario.dtNasc.getUTCFullYear() %>
+                                                    <% } %>
+                                </li>
+                                <li>R.G.:
+                                    <%= estagiario.rg %>
+                                </li>
+                                <li>E-mail:
+                                    <%= estagiario.email %>
+                                </li>
+                                <li>Data de Admissão:
+                                    <% if(estagiario.dtAdmissao) { %>
+                                        <%= estagiario.dtAdmissao.getUTCDate() %>/
+                                            <%= estagiario.dtAdmissao.getUTCMonth() +1%>/
+                                                <%= estagiario.dtAdmissao.getUTCFullYear() %>
+                                                    <% } %>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="panel-footer container-fluid">
+                            <div class="col-md-6">
+
+                                <a href="/estagiarios/<%= estagiario.codigo %>" class="btn btn-primary btn-block">Editar</a>
+
+                            </div>
+                            <div class="col-md-6">
+
+                                <button type="button" class="btn btn-danger btn-block btn-delete" data-codigo="<%= estagiario.codigo %>">Excluir Estagiário</button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <% } } %>
+
+    </main>
+
+    <footer>
+
+        <div class="modal fade" id="modal-loading">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body row">
+                        <div class="col-md-4 col-md-offset-4">
+                            <br>
+                            <br>
+                            <div class="loader"></div>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+
+    </footer>
+
+    <script src="./libs/jquery/jquery.min.js"></script>
+    <script src="./libs/jquery-mask/jquery.mask.min.js"></script>
+    <script src="./libs/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+
+        $('.horarios-field').mask('00:00');
+
+        var itsTime = function (timeString) {
+
+            if (/^\d{1,2}:\d{2}$/.test(timeString))
+                return true
+
+
+            return false;
+
+        }
+
+        var diffBetweenTimes = function (timeString1, timeString2) {
+
+            var splitTime1 = timeString1.split(':');
+            var splitTime2 = timeString2.split(':');
+
+            var hrsMilli1 = Number(splitTime1[0]) * 3.6e+6;
+            var minMilli1 = Number(splitTime1[1]) * 60000;
+
+            var hrsMilli2 = Number(splitTime2[0]) * 3.6e+6;
+            var minMilli2 = Number(splitTime2[1]) * 60000;
+
+            var millis1 = hrsMilli1 + minMilli1;
+            var millis2 = hrsMilli2 + minMilli2;
+
+            var millisDiff = millis2 - millis1;
+
+
+
+            return millisDiff;
+
+
+        }
+
+        var convertToTimeString = function (millis) {
+
+            var minutes = Math.floor(millis / 60000);
+
+            var hours = Math.floor(minutes / 60);
+            minutes = minutes - (hours * 60);
+
+            var string = ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
+
+            return string;
+
+        }
+
+        $('.btn-delete').click(function () {
+            var id = $(this).attr('data-codigo');
+            var confirmed = confirm("Deseja mesmo deletar estágiario do codigo " + id + "?");
+
+            if (confirmed) {
+                $("#modal-loading").modal('show');
+                $.ajax({
+                    method: 'DELETE',
+                    url: '/estagiarios/' + id,
+                    dataType: 'json'
+                }).done(function (data) {
+
+                    $("#modal-loading").modal('hide');
+
+                    if (data.error) {
+                        alert('Erro! Não foi possivel deletar o estagiário.')
+                    }
+
+                    window.location.reload();
+                });
+
+
+            }
+
+        });
+
+        $('.folga').change(function () {
+
+            var $extra = $(this).parent().parent().find('.extra').first();
+
+            if ($(this).is(':checked')) {
+
+                $(this).parent().parent().parent().parent().find('input[type="text"]').each(function (index,
+                    elem) {
+
+                    $(this).val('Folga');
+                    $(this).prop('readonly', true);
+
+                });
+
+                if ($extra.is(':checked')) {
+                    $extra.prop('checked', false);
+                }
+
+            } else {
+                $(this).parent().parent().parent().parent().find('input[type="text"]').each(function (index,
+                    elem) {
+
+                    $(this).val('');
+                    if (!(/.*Total$/.test($(this).attr('name')))) {
+                        $(this).prop('readonly', false);
+                    }
+
+                });
+            }
+
+
+        });
+
+        $('.extra').change(function () {
+
+            var $folga = $(this).parent().parent().find('.folga').first();
+
+
+            if ($(this).is(':checked')) {
+
+                $(this).parent().parent().parent().parent().find('input[type="text"]').each(function (index,
+                    elem) {
+
+                    $(this).val('Extra');
+
+                    $(this).prop('readonly', true);
+
+
+
+
+                });
+
+                if ($folga.is(':checked')) {
+                    $folga.prop('checked', false);
+                }
+
+            } else {
+                $(this).parent().parent().parent().parent().find('input[type="text"]').each(function (index,
+                    elem) {
+
+                    $(this).val('');
+                    if (!(/.*Total$/.test($(this).attr('name')))) {
+                        $(this).prop('readonly', false);
+                    }
+
+                });
+            }
+
+
+
+        });
+
+
+        $('.segunda').change(function () {
+
+            var values = [];
+
+            var $linha = $(this).parent().parent();
+
+            $linha.find('.segunda').each(function (index, elem) {
+
+                values[index] = $(this).val();
+
+            }).promise().done(function () {
+
+                var totalMillis = 0;
+
+                if (values[0].trim() != "" && values[1].trim() != "") {
+
+                    totalMillis += itsTime(values[0]) && itsTime(values[1]) ? diffBetweenTimes(values[0],
+                        values[1]) : 0;
+
+                }
+
+                if (values[2].trim() != "" && values[3].trim() != "") {
+                    totalMillis += itsTime(values[2]) && itsTime(values[3]) ? diffBetweenTimes(values[2],
+                        values[3]) : 0;
+                }
+
+                if (values[4].trim() != "" && values[5].trim() != "") {
+                    totalMillis += itsTime(values[4]) && itsTime(values[5]) ? diffBetweenTimes(values[4],
+                        values[5]) : 0;
+                }
+
+                $linha.find('input[name="segTotal"]').val(convertToTimeString(totalMillis));
+
+            });
+
+        });
+
+        $('.terca').change(function () {
+            var values = [];
+
+            var $linha = $(this).parent().parent();
+
+            $linha.find('.terca').each(function (index, elem) {
+
+                values[index] = $(this).val();
+
+            }).promise().done(function () {
+
+                var totalMillis = 0;
+
+                if (values[0].trim() != "" && values[1].trim() != "") {
+
+                    totalMillis += itsTime(values[0]) && itsTime(values[1]) ? diffBetweenTimes(values[0],
+                        values[1]) : 0;
+
+                }
+
+                if (values[2].trim() != "" && values[3].trim() != "") {
+                    totalMillis += itsTime(values[2]) && itsTime(values[3]) ? diffBetweenTimes(values[2],
+                        values[3]) : 0;
+                }
+
+                if (values[4].trim() != "" && values[5].trim() != "") {
+                    totalMillis += itsTime(values[4]) && itsTime(values[5]) ? diffBetweenTimes(values[4],
+                        values[5]) : 0;
+                }
+
+                $linha.find('input[name="terTotal"]').val(convertToTimeString(totalMillis));
+
+            });
+        });
+
+        $('.quarta').change(function () {
+            var values = [];
+
+            var $linha = $(this).parent().parent();
+
+            $linha.find('.quarta').each(function (index, elem) {
+
+                values[index] = $(this).val();
+
+            }).promise().done(function () {
+
+                var totalMillis = 0;
+
+                if (values[0].trim() != "" && values[1].trim() != "") {
+
+                    totalMillis += itsTime(values[0]) && itsTime(values[1]) ? diffBetweenTimes(values[0],
+                        values[1]) : 0;
+
+                }
+
+                if (values[2].trim() != "" && values[3].trim() != "") {
+                    totalMillis += itsTime(values[2]) && itsTime(values[3]) ? diffBetweenTimes(values[2],
+                        values[3]) : 0;
+                }
+
+                if (values[4].trim() != "" && values[5].trim() != "") {
+                    totalMillis += itsTime(values[4]) && itsTime(values[5]) ? diffBetweenTimes(values[4],
+                        values[5]) : 0;
+                }
+
+                $linha.find('input[name="quaTotal"]').val(convertToTimeString(totalMillis));
+
+            });
+        });
+
+        $('.quinta').change(function () {
+            var values = [];
+
+            var $linha = $(this).parent().parent();
+
+            $linha.find('.quinta').each(function (index, elem) {
+
+                values[index] = $(this).val();
+
+            }).promise().done(function () {
+
+                var totalMillis = 0;
+
+                if (values[0].trim() != "" && values[1].trim() != "") {
+
+                    totalMillis += itsTime(values[0]) && itsTime(values[1]) ? diffBetweenTimes(values[0],
+                        values[1]) : 0;
+
+                }
+
+                if (values[2].trim() != "" && values[3].trim() != "") {
+                    totalMillis += itsTime(values[2]) && itsTime(values[3]) ? diffBetweenTimes(values[2],
+                        values[3]) : 0;
+                }
+
+                if (values[4].trim() != "" && values[5].trim() != "") {
+                    totalMillis += itsTime(values[4]) && itsTime(values[5]) ? diffBetweenTimes(values[4],
+                        values[5]) : 0;
+                }
+
+                $linha.find('input[name="quiTotal"]').val(convertToTimeString(totalMillis));
+
+            });
+        });
+
+        $('.sexta').change(function () {
+            var values = [];
+
+            var $linha = $(this).parent().parent();
+
+            $linha.find('.sexta').each(function (index, elem) {
+
+                values[index] = $(this).val();
+
+            }).promise().done(function () {
+
+                var totalMillis = 0;
+
+                if (values[0].trim() != "" && values[1].trim() != "") {
+
+                    totalMillis += itsTime(values[0]) && itsTime(values[1]) ? diffBetweenTimes(values[0],
+                        values[1]) : 0;
+
+                }
+
+                if (values[2].trim() != "" && values[3].trim() != "") {
+                    totalMillis += itsTime(values[2]) && itsTime(values[3]) ? diffBetweenTimes(values[2],
+                        values[3]) : 0;
+                }
+
+                if (values[4].trim() != "" && values[5].trim() != "") {
+                    totalMillis += itsTime(values[4]) && itsTime(values[5]) ? diffBetweenTimes(values[4],
+                        values[5]) : 0;
+                }
+
+                $linha.find('input[name="sexTotal"]').val(convertToTimeString(totalMillis));
+
+            });
+        });
+
+        $('.sabado').change(function () {
+            var values = [];
+
+            var $linha = $(this).parent().parent();
+
+            $linha.find('.sabado').each(function (index, elem) {
+
+                values[index] = $(this).val();
+
+            }).promise().done(function () {
+
+                var totalMillis = 0;
+
+                if (values[0].trim() != "" && values[1].trim() != "") {
+
+                    totalMillis += itsTime(values[0]) && itsTime(values[1]) ? diffBetweenTimes(values[0],
+                        values[1]) : 0;
+
+                }
+
+                if (values[2].trim() != "" && values[3].trim() != "") {
+                    totalMillis += itsTime(values[2]) && itsTime(values[3]) ? diffBetweenTimes(values[2],
+                        values[3]) : 0;
+                }
+
+                if (values[4].trim() != "" && values[5].trim() != "") {
+                    totalMillis += itsTime(values[4]) && itsTime(values[5]) ? diffBetweenTimes(values[4],
+                        values[5]) : 0;
+                }
+                $linha.find('input[name="sabTotal"]').val(convertToTimeString(totalMillis));
+
+            });
+        });
+    </script>
+</body>
+
+</html>

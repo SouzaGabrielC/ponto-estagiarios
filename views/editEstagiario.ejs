@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Editar <%= estagiario.nome %> - Ponto Estagiários</title>
+    <link rel="stylesheet" href="../libs/bootstrap/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <header>
+
+
+        <nav class="navbar navbar-default" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Painel de Controle</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Início</a></li>
+                    <li class="active"><a href="/estagiarios">Estagiários</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+
+    </header>
+
+    <main class="container">
+
+        <h2>Editar Estagiário: <%= estagiario.nome %></h2>
+
+        
+        <form action="/estagiarios/<%= estagiario.codigo %>" method="POST" role="form">
+            <small class="text-danger">* Campos Obrigatórios</small>
+            <br>
+            <br>
+            <div class="form-group">
+                <label for="">Código: <span class="text-danger">*</span></label>
+                <input value="<%= estagiario.codigo %>" type="text" class="form-control" id="" placeholder="Digite o código do cracha" name="codigo" required readonly>
+            </div>
+            <div class="form-group">
+                <label for="">Nome: <span class="text-danger">*</span></label>
+                <input value="<%= estagiario.nome %>" type="text" class="form-control" id="" placeholder="Digite o nome" name="nome" required>
+            </div>
+            <div class="form-group">
+                <label for="">Setor: <span class="text-danger">*</span></label>
+                <input value="<%= estagiario.setor %>" type="text" class="form-control" id="" placeholder="Digite o setor" name="setor" required>
+            </div>
+            <div class="form-group">
+                <label for="">E-mail: </label>
+                <input value="<%= estagiario.email %>" type="email" class="form-control" id="" placeholder="Digite o e-mail" name="email">
+            </div>
+            <div class="form-group">
+                <label for="">Data de Nascimento: </label>
+                <input value="<% if(estagiario.dtNasc) { %><%= estagiario.dtNasc.getUTCFullYear() %>-<%= ('0'+(estagiario.dtNasc.getUTCMonth()+1)).slice(-2)%>-<%= ('0'+(estagiario.dtNasc.getUTCDate())).slice(-2)%><% } %>" type="date" class="form-control" id="" name="dtNasc">
+            </div>
+            <div class="form-group">
+                <label for="">R.G.: </label>
+                <input value="<%= estagiario.rg %>" type="text" class="form-control" id="" placeholder="Input field" name="rg">
+            </div>
+            <div class="form-group">
+                <label for="">CPF: </label>
+                <input value="<%= estagiario.cpf %>" type="text" class="form-control" id="" placeholder="Digite o CPF" name="cpf">
+            </div>
+            <div class="form-group">
+                <label for="">Data de Admissão: </label>
+                <input value="<% if(estagiario.dtAdmissao) { %><%= estagiario.dtAdmissao.getUTCFullYear() %>-<%= ('0'+(estagiario.dtAdmissao.getUTCMonth()+1)).slice(-2)%>-<%= ('0'+(estagiario.dtAdmissao.getUTCDate())).slice(-2)%><% } %>" type="date" class="form-control" id="" name="dtAdmissao">
+            </div>
+            <div class="form-group">
+                <label for="">Horário de Trabalho: <span class="text-danger">*</span></label>
+                
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Dias</th>
+                            <th>Entrada 1 <span class="text-danger">*</span></th>
+                            <th>Saída 1 <span class="text-danger">*</span></th>
+                            <th>Entrada 2 <span class="text-danger">*</span></th>
+                            <th>Saída 2 <span class="text-danger">*</span></th>
+                            <th>Entrada 3</th>
+                            <th>Saída 3</th>
+                            <th>Total de Horas <span class="text-danger">*</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><label for="">Segunda</label></td>
+                            <td><input value="<%= estagiario.horarios.segunda[0] %>" type="text" name="segE1" class="form-control segunda horarios-field" required></td>
+                            <td><input value="<%= estagiario.horarios.segunda[1] %>" type="text" name="segS1" class="form-control segunda horarios-field" required></td>
+                            <td><input value="<%= estagiario.horarios.segunda[2] %>" type="text" name="segE2" class="form-control segunda horarios-field" required></td>
+                            <td><input value="<%= estagiario.horarios.segunda[3] %>" type="text" name="segS2" class="form-control segunda horarios-field" required></td>
+                            <td><input value="<%= estagiario.horarios.segunda[4] %>" type="text" name="segE3" class="form-control segunda horarios-field"></td>
+                            <td><input value="<%= estagiario.horarios.segunda[5] %>" type="text" name="segS3" class="form-control segunda horarios-field"></td>
+                            <td>
+                            <input type="text" name="segTotal" class="form-control" value="<%= estagiario.horarios.segundaTotal %>" required="required" readonly>
+                            </td>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input class="folga" type="checkbox" value="true" name="segFolfa" <%= estagiario.horarios.segundaFolga ? 'checked' : '' %>>
+                                        Folga
+                                    </label>
+                                    <label>
+                                        <input class="extra" type="checkbox" value="true" name="segExtra" <%= estagiario.horarios.segundaExtra ? 'checked' : '' %>>
+                                        Extra
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="">Terça</label></td>
+                            <td><input value="<%= estagiario.horarios.terca[0] %>" type="text" name="terE1" class="form-control terca horarios-field" required></td>
+                            <td><input value="<%= estagiario.horarios.terca[1] %>" type="text" name="terS1" class="form-control terca horarios-field" required></td>
+                            <td><input value="<%= estagiario.horarios.terca[2] %>" type="text" name="terE2" class="form-control terca horarios-field" required></td>
+                            <td><input value="<%= estagiario.horarios.terca[3] %>" type="text" name="terS2" class="form-control terca horarios-field" required></td>
+                            <td><input value="<%= estagiario.horarios.terca[4] %>" type="text" name="terE3" class="form-control terca horarios-field"></td>
+                            <td><input value="<%= estagiario.horarios.terca[5] %>" type="text" name="terS3" class="form-control terca horarios-field"></td>
+                            <td>
+                            <input type="text" name="terTotal" class="form-control" value="<%= estagiario.horarios.tercaTotal %>" required="required" readonly>
+                            </td>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input class="folga" type="checkbox" value="true" name="terFolga" <%= estagiario.horarios.tercaFolga ? 'checked' : '' %>>
+                                        Folga
+                                    </label>
+                                    <label>
+                                        <input class="extra" type="checkbox" value="true" name="terExtra" <%= estagiario.horarios.tercaExtra ? 'checked' : '' %>>
+                                        Extra
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="">Quarta</label></td>
+                            <td><input value="<%= estagiario.horarios.quarta[0] %>" type="text" name="quaE1" class="form-control quarta horarios-field" required></td>
+                            <td><input value="<%= estagiario.horarios.quarta[1] %>" type="text" name="quaS1" class="form-control quarta horarios-field" required></td>
+                            <td><input value="<%= estagiario.horarios.quarta[2] %>" type="text" name="quaE2" class="form-control quarta horarios-field" required></td>
+                            <td><input value="<%= estagiario.horarios.quarta[3] %>" type="text" name="quaS2" class="form-control quarta horarios-field" required></td>
+                            <td><input value="<%= estagiario.horarios.quarta[4] %>" type="text" name="quaE3" class="form-control quarta horarios-field"></td>
+                            <td><input value="<%= estagiario.horarios.quarta[5] %>" type="text" name="quaS3" class="form-control quarta horarios-field"></td>
+                            <td>
+                            <input type="text" name="quaTotal" class="form-control" value="<%= estagiario.horarios.quartaTotal %>" required="required" readonly>
+                            </td>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input class="folga" type="checkbox" value="true" name="quaFolga" <%= estagiario.horarios.quartaFolga ? 'checked' : '' %>>
+                                        Folga
+                                    </label>
+                                    <label>
+                                        <input class="extra" type="checkbox" value="true" name="quaExtra" <%= estagiario.horarios.quartaExtra ? 'checked' : '' %>>
+                                        Extra
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="">Quinta</label></td>
+                            <td><input value="<%= estagiario.horarios.quinta[0] %>" type="text" name="quiE1" class="form-control quinta horarios-field" required></td>
+                            <td><input value="<%= estagiario.horarios.quinta[1] %>" type="text" name="quiS1" class="form-control quinta horarios-field" required></td>
+                            <td><input value="<%= estagiario.horarios.quinta[2] %>" type="text" name="quiE2" class="form-control quinta horarios-field" required></td>
+                            <td><input value="<%= estagiario.horarios.quinta[3] %>" type="text" name="quiS2" class="form-control quinta horarios-field" required></td>
+                            <td><input value="<%= estagiario.horarios.quinta[4] %>" type="text" name="quiE3" class="form-control quinta horarios-field"></td>
+                            <td><input value="<%= estagiario.horarios.quinta[5] %>" type="text" name="quiS3" class="form-control quinta horarios-field"></td>
+                            <td>
+                            <input type="text" name="quiTotal" class="form-control" value="<%= estagiario.horarios.quintaTotal %>" required="required" readonly>
+                            </td>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input class="folga" type="checkbox" value="true" name="quiFolga" <%= estagiario.horarios.quintaFolga ? 'checked' : '' %>>
+                                        Folga
+                                    </label>
+                                    <label>
+                                        <input class="extra" type="checkbox" value="true" name="quiExtra" <%= estagiario.horarios.quintaExtra ? 'checked' : '' %>>
+                                        Extra
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="">Sexta</label></td>
+                            <td><input value="<%= estagiario.horarios.sexta[0] %>" type="text" name="sexE1" class="form-control sexta horarios-field" required></td>
+                            <td><input value="<%= estagiario.horarios.sexta[1] %>" type="text" name="sexS1" class="form-control sexta horarios-field" required></td>
+                            <td><input value="<%= estagiario.horarios.sexta[2] %>" type="text" name="sexE2" class="form-control sexta horarios-field" required></td>
+                            <td><input value="<%= estagiario.horarios.sexta[3] %>" type="text" name="sexS2" class="form-control sexta horarios-field" required></td>
+                            <td><input value="<%= estagiario.horarios.sexta[4] %>" type="text" name="sexE3" class="form-control sexta horarios-field"></td>
+                            <td><input value="<%= estagiario.horarios.sexta[5] %>" type="text" name="sexS3" class="form-control sexta horarios-field"></td>
+                            <td>
+                            <input type="text" name="sexTotal" class="form-control" value="<%= estagiario.horarios.sextaTotal %>" required="required" readonly>
+                            </td>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input class="folga" type="checkbox" value="true" name="sexFolga" <%= estagiario.horarios.sextaFolga ? 'checked' : '' %>>
+                                        Folga
+                                    </label>
+                                    <label>
+                                        <input class="extra" type="checkbox" value="true" name="sexExtra" <%= estagiario.horarios.sextaExtra ? 'checked' : '' %>>
+                                        Extra
+                                    </label>
+                                </div>
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <td><label for="">Sábado</label></td>
+                            <td><input value="<%= estagiario.horarios.sabado[0] %>" type="text" name="sabE1" class="form-control sabado horarios-field" required></td>
+                            <td><input value="<%= estagiario.horarios.sabado[1] %>" type="text" name="sabS1" class="form-control sabado horarios-field" required></td>
+                            <td><input value="<%= estagiario.horarios.sabado[2] %>" type="text" name="sabE2" class="form-control sabado horarios-field" required></td>
+                            <td><input value="<%= estagiario.horarios.sabado[3] %>" type="text" name="sabS2" class="form-control sabado horarios-field" required></td>
+                            <td><input value="<%= estagiario.horarios.sabado[4] %>" type="text" name="sabE3" class="form-control sabado horarios-field"></td>
+                            <td><input value="<%= estagiario.horarios.sabado[5] %>" type="text" name="sabS3" class="form-control sabado horarios-field"></td>
+                            <td>
+                            <input type="text" name="sabTotal" class="form-control" value="<%= estagiario.horarios.sabadoTotal %>" required="required" readonly>
+                            </td>
+                            <td>
+                                <div class="checkbox">
+                                    <label>
+                                        <input class="folga" type="checkbox" value="true" name="sabFolga" <%= estagiario.horarios.sabadoFolga? 'checked' : '' %>>
+                                        Folga
+                                    </label>
+                                    <label>
+                                        <input class="extra" type="checkbox" value="true" name="sabExtra" <%= estagiario.horarios.sabadoExtra ? 'checked' : '' %>>
+                                        Extra
+                                    </label>
+                                </div>
+                            </td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+                
+            </div>
+
+            <button type="submit" class="btn btn-success btn-lg btn-block">Salvar Alterações</button>
+        </form>
+        
+        <br>
+        <br>
+
+    </main>
+
+    <footer>
+    </footer>
+
+    <script src="../libs/jquery/jquery.min.js"></script>
+    <script src="../libs/jquery-mask/jquery.mask.min.js"></script>
+    <script src="../libs/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+        
+        $('.horarios-field').mask('00:00');
+
+        var itsTime = function(timeString){
+
+            if(/^\d{1,2}:\d{2}$/.test(timeString))
+                return true
+
+
+            return false;
+        
+        }
+
+        var diffBetweenTimes = function(timeString1, timeString2){
+
+            var splitTime1 = timeString1.split(':');
+            var splitTime2 = timeString2.split(':');
+
+            var hrsMilli1 = Number(splitTime1[0]) * 3.6e+6;
+            var minMilli1 = Number(splitTime1[1]) * 60000;
+
+            var hrsMilli2 = Number(splitTime2[0]) * 3.6e+6;
+            var minMilli2 = Number(splitTime2[1]) * 60000;
+
+            var millis1 = hrsMilli1 + minMilli1;
+            var millis2 = hrsMilli2 + minMilli2;
+
+            var millisDiff = millis2 - millis1;
+            
+
+
+            return millisDiff;
+
+            
+        }
+
+        var convertToTimeString = function(millis){
+
+            var minutes = Math.floor(millis/60000);
+
+            var hours = Math.floor(minutes/60);
+            minutes = minutes - (hours*60);
+
+            var string = ('0' + hours).slice(-2) + ':' + ('0' + minutes).slice(-2);
+            
+            return string;
+
+        }
+
+        $('.folga').each(function(){
+
+            var $extra = $(this).parent().parent().find('.extra').first();
+
+            if($(this).is(':checked')){
+
+                $(this).parent().parent().parent().parent().find('input[type="text"]').each(function(index, elem){
+
+                    $(this).val('Folga');
+                    $(this).prop('readonly', true);
+
+                });
+
+                if($extra.is(':checked')){
+                    $extra.prop('checked', false);
+                }
+
+            }
+        });
+
+        $('.extra').each(function(){
+
+            var $folga = $(this).parent().parent().find('.folga').first();
+
+
+            if($(this).is(':checked')){
+
+                $(this).parent().parent().parent().parent().find('input[type="text"]').each(function(index, elem){
+            
+                    $(this).val('Extra');
+                    
+                        $(this).prop('readonly', true);
+                    
+                    
+                });
+
+                if($folga.is(':checked')){
+                    $folga.prop('checked', false);
+                }
+
+            }
+
+        });
+
+        $('.folga').change(function(){
+
+            var $extra = $(this).parent().parent().find('.extra').first();
+
+            if($(this).is(':checked')){
+
+                $(this).parent().parent().parent().parent().find('input[type="text"]').each(function(index, elem){
+
+                    $(this).val('Folga');
+                    $(this).prop('readonly', true);
+
+                });
+
+                if($extra.is(':checked')){
+                    $extra.prop('checked', false);
+                }
+
+            }else{
+                $(this).parent().parent().parent().parent().find('input[type="text"]').each(function(index, elem){
+
+                    $(this).val('');
+                    if(!(/.*Total$/.test($(this).attr('name')))){
+                        $(this).prop('readonly', false);
+                    }
+
+                });
+            }
+
+
+        });
+
+        $('.extra').change(function(){
+
+            var $folga = $(this).parent().parent().find('.folga').first();
+
+
+            if($(this).is(':checked')){
+
+                $(this).parent().parent().parent().parent().find('input[type="text"]').each(function(index, elem){
+            
+                    $(this).val('Extra');
+                    
+                        $(this).prop('readonly', true);
+                    
+                    
+                    
+
+                });
+
+                if($folga.is(':checked')){
+                    $folga.prop('checked', false);
+                }
+
+            }else{
+                $(this).parent().parent().parent().parent().find('input[type="text"]').each(function(index, elem){
+
+                    $(this).val('');
+                    if(!(/.*Total$/.test($(this).attr('name')))){
+                        $(this).prop('readonly', false);
+                    }
+
+                });
+            }
+            
+
+
+        });
+
+
+        $('.segunda').change(function(){
+            
+            var values = [];
+
+            var $linha = $(this).parent().parent();
+
+            $linha.find('.segunda').each(function(index, elem){
+
+                values[index] = $(this).val();
+
+            }).promise().done(function(){
+                
+                var totalMillis = 0;
+
+                if(values[0].trim() != "" && values[1].trim() != ""){
+
+                    totalMillis += itsTime(values[0]) && itsTime(values[1]) ? diffBetweenTimes(values[0], values[1]) : 0; 
+
+                }
+
+                if(values[2].trim() != "" && values[3].trim() != ""){
+                    totalMillis += itsTime(values[2]) && itsTime(values[3]) ? diffBetweenTimes(values[2], values[3]) : 0; 
+                }
+
+                if(values[4].trim() != "" && values[5].trim() != ""){
+                    totalMillis += itsTime(values[4]) && itsTime(values[5]) ? diffBetweenTimes(values[4], values[5]) : 0; 
+                }
+
+                $linha.find('input[name="segTotal"]').val(convertToTimeString(totalMillis));
+
+            });
+
+        });
+
+        $('.terca').change(function(){
+            var values = [];
+
+            var $linha = $(this).parent().parent();
+
+            $linha.find('.terca').each(function(index, elem){
+
+                values[index] = $(this).val();
+
+            }).promise().done(function(){
+                
+                var totalMillis = 0;
+
+                if(values[0].trim() != "" && values[1].trim() != ""){
+
+                    totalMillis += itsTime(values[0]) && itsTime(values[1]) ? diffBetweenTimes(values[0], values[1]) : 0; 
+
+                }
+
+                if(values[2].trim() != "" && values[3].trim() != ""){
+                    totalMillis += itsTime(values[2]) && itsTime(values[3]) ? diffBetweenTimes(values[2], values[3]) : 0; 
+                }
+
+                if(values[4].trim() != "" && values[5].trim() != ""){
+                    totalMillis += itsTime(values[4]) && itsTime(values[5]) ? diffBetweenTimes(values[4], values[5]) : 0; 
+                }
+
+                $linha.find('input[name="terTotal"]').val(convertToTimeString(totalMillis));
+
+            });
+        });
+
+        $('.quarta').change(function(){
+            var values = [];
+
+            var $linha = $(this).parent().parent();
+
+            $linha.find('.quarta').each(function(index, elem){
+
+                values[index] = $(this).val();
+
+            }).promise().done(function(){
+                
+                var totalMillis = 0;
+
+                if(values[0].trim() != "" && values[1].trim() != ""){
+
+                    totalMillis += itsTime(values[0]) && itsTime(values[1]) ? diffBetweenTimes(values[0], values[1]) : 0; 
+
+                }
+
+                if(values[2].trim() != "" && values[3].trim() != ""){
+                    totalMillis += itsTime(values[2]) && itsTime(values[3]) ? diffBetweenTimes(values[2], values[3]) : 0; 
+                }
+
+                if(values[4].trim() != "" && values[5].trim() != ""){
+                    totalMillis += itsTime(values[4]) && itsTime(values[5]) ? diffBetweenTimes(values[4], values[5]) : 0; 
+                }
+
+                $linha.find('input[name="quaTotal"]').val(convertToTimeString(totalMillis));
+
+            });
+        });
+
+        $('.quinta').change(function(){
+            var values = [];
+
+            var $linha = $(this).parent().parent();
+
+            $linha.find('.quinta').each(function(index, elem){
+
+                values[index] = $(this).val();
+
+            }).promise().done(function(){
+                
+                var totalMillis = 0;
+
+                if(values[0].trim() != "" && values[1].trim() != ""){
+
+                    totalMillis += itsTime(values[0]) && itsTime(values[1]) ? diffBetweenTimes(values[0], values[1]) : 0; 
+
+                }
+
+                if(values[2].trim() != "" && values[3].trim() != ""){
+                    totalMillis += itsTime(values[2]) && itsTime(values[3]) ? diffBetweenTimes(values[2], values[3]) : 0; 
+                }
+
+                if(values[4].trim() != "" && values[5].trim() != ""){
+                    totalMillis += itsTime(values[4]) && itsTime(values[5]) ? diffBetweenTimes(values[4], values[5]) : 0; 
+                }
+
+                $linha.find('input[name="quiTotal"]').val(convertToTimeString(totalMillis));
+
+            });
+        });
+
+        $('.sexta').change(function(){
+            var values = [];
+
+            var $linha = $(this).parent().parent();
+
+            $linha.find('.sexta').each(function(index, elem){
+
+                values[index] = $(this).val();
+
+            }).promise().done(function(){
+                
+                var totalMillis = 0;
+
+                if(values[0].trim() != "" && values[1].trim() != ""){
+
+                    totalMillis += itsTime(values[0]) && itsTime(values[1]) ? diffBetweenTimes(values[0], values[1]) : 0; 
+
+                }
+
+                if(values[2].trim() != "" && values[3].trim() != ""){
+                    totalMillis += itsTime(values[2]) && itsTime(values[3]) ? diffBetweenTimes(values[2], values[3]) : 0; 
+                }
+
+                if(values[4].trim() != "" && values[5].trim() != ""){
+                    totalMillis += itsTime(values[4]) && itsTime(values[5]) ? diffBetweenTimes(values[4], values[5]) : 0; 
+                }
+
+                $linha.find('input[name="sexTotal"]').val(convertToTimeString(totalMillis));
+
+            });
+        });
+
+        $('.sabado').change(function(){
+           var values = [];
+
+            var $linha = $(this).parent().parent();
+
+            $linha.find('.sabado').each(function(index, elem){
+
+                values[index] = $(this).val();
+
+            }).promise().done(function(){
+                
+                var totalMillis = 0;
+
+                if(values[0].trim() != "" && values[1].trim() != ""){
+
+                    totalMillis += itsTime(values[0]) && itsTime(values[1]) ? diffBetweenTimes(values[0], values[1]) : 0; 
+
+                }
+
+                if(values[2].trim() != "" && values[3].trim() != ""){
+                    totalMillis += itsTime(values[2]) && itsTime(values[3]) ? diffBetweenTimes(values[2], values[3]) : 0; 
+                }
+
+                if(values[4].trim() != "" && values[5].trim() != ""){
+                    totalMillis += itsTime(values[4]) && itsTime(values[5]) ? diffBetweenTimes(values[4], values[5]) : 0; 
+                }
+                $linha.find('input[name="sabTotal"]').val(convertToTimeString(totalMillis));
+
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Inicio - Ponto Estagiários</title>
+    <link rel="stylesheet" href="./libs/bootstrap/css/bootstrap.min.css">
+    <style>
+        main {
+            padding: 2% 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+            cursor: pointer
+        }
+
+        a:hover {
+            text-decoration: none;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+
+        <nav class="navbar navbar-default" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Painel de Controle</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+
+    </header>
+
+    <main class="container">
+
+        <div class="col-md-12">
+            <h2>Menu Inicial</h2>
+            <br>
+            <br>
+        </div>
+        <div class="row">
+            <div class="<%= nivel == 1 ? 'col-md-3' : 'col-md-4' %>">
+                <a href="/estagiarios">
+                    <div class="panel panel-default" style="text-align: center">
+                        <div class="panel-body" style="padding: 2em">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true" style="font-size: 5em"></span>
+                        </div>
+                        <div class="panel-footer"><strong>Adicionar / Editar / Remover Estagiários</strong></div>
+                    </div>
+                </a>
+            </div>
+            <div class="<%= nivel == 1 ? 'col-md-3' : 'col-md-4' %>">
+                <a href="/relatorios">
+                    <div class="panel panel-default" style="text-align: center">
+                        <div class="panel-body" style="padding: 2em">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true" style="font-size: 5em"></span>
+                        </div>
+                        <div class="panel-footer"><strong>Relatórios</strong></div>
+                    </div>
+                </a>
+            </div>
+            <div class="<%= nivel == 1 ? 'col-md-3' : 'col-md-4' %>">
+                <a href="/feriados">
+                    <div class="panel panel-default" style="text-align: center">
+                        <div class="panel-body" style="padding: 2em">
+                            <span class="glyphicon glyphicon-briefcase" aria-hidden="true" style="font-size: 5em"></span>
+                        </div>
+                        <div class="panel-footer"><strong>Feriados</strong></div>
+                    </div>
+                </a>
+            </div>
+            <% if(nivel == 1) { %>
+            <div class="col-md-3">
+                <a href="/empresa">
+                    <div class="panel panel-default" style="text-align: center">
+                        <div class="panel-body" style="padding: 2em">
+                            <span class="glyphicon glyphicon-info-sign" aria-hidden="true" style="font-size: 5em"></span>
+                        </div>
+                        <div class="panel-footer"><strong>Dados da empresa</strong></div>
+                    </div>
+                </a>
+            </div>
+            <% } %>
+        </div>
+        <% if(nivel == 1) { %>
+        <div class="row">
+            <div class="col-md-3">
+                <a href="/usuarios">
+                    <div class="panel panel-default" style="text-align: center">
+                        <div class="panel-body" style="padding: 2em">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true" style="font-size: 5em"></span>
+                        </div>
+                        <div class="panel-footer"><strong>Usuários do Sistema</strong></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <% } %>
+    </main>
+
+    <footer>
+    </footer>
+
+    <script src="./libs/jquery/jquery.min.js"></script>
+    <script src="./libs/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

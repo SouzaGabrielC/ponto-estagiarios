@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Empresa - Ponto Estagiários</title>
+    <link rel="stylesheet" href="./libs/bootstrap/css/bootstrap.min.css">
+    <style>
+        main {
+            padding: 2% 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+            cursor: pointer
+        }
+
+        a:hover {
+            text-decoration: none;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+
+        <nav class="navbar navbar-default" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Painel de Controle</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Início</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+
+    </header>
+
+    <main class="container">
+
+        <h2>Dados da empresa</h2>
+
+        <% if(error){ %>
+
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <strong>Erro!</strong> <%= error %>
+        </div>
+        
+        <% } %>
+
+        <form action="/empresa" method="POST" role="form">
+            <small class="text-danger">* Campos Obrigatórios</small>
+            <div class="form-group">
+                <label for="">Nome da empresa: <span class="text-danger">*</span></label>
+                <input value="<%= empresa != null ?  empresa.nome : '' %>" type="text" class="form-control" id="" name="nome" placeholder="Digite o nome da empresa" required>
+            </div> 
+            
+            <div class="form-group">
+                <label for="">CNPJ: <span class="text-danger">*</span></label>
+                <input value="<%= empresa != null ? empresa.cnpj : '' %>" type="text" class="form-control" id="" name="cnpj" placeholder="Digite o cnpj da empresa" required>
+            </div>
+            
+            <button type="submit" class="btn btn-success btn-lg">Salvar dados</button>
+        </form>
+
+        
+    </main>
+
+    <footer>
+    </footer>
+
+    <script src="./libs/jquery/jquery.min.js"></script>
+    <script src="./libs/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

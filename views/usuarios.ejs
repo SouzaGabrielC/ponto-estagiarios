@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Usuários - Ponto Estagiários</title>
+    <link rel="stylesheet" href="./libs/bootstrap/css/bootstrap.min.css">
+    <style>
+        main {
+            padding: 2% 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+            cursor: pointer
+        }
+
+        a:hover {
+            text-decoration: none;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+
+        <nav class="navbar navbar-default" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Painel de Controle</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Início</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+
+    </header>
+
+    <main class="container">
+
+        <h2>Cadastro de Usuários</h2>
+
+        <% if(error){ %>
+
+        <div class="alert alert-danger" id="error-alert">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <span><strong>Erro!</strong> <%= error %></span>
+        </div>
+        
+        <% } %>
+
+        <form action="/usuarios" method="POST" role="form">
+            <small class="text-danger">* Campos Obrigatórios</small>
+            <br>
+            <br>
+            <div class="form-group">
+                <label for="">Nome: <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="" placeholder="Digite o nome do usuário" name="nome" required>
+            </div>
+            <div class="form-group">
+                <label for="">Usuário: <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="" placeholder="Digite o usuário para login" name="usuario" required>
+            </div>
+            <div class="form-group">
+                <label for="">Senha: <span class="text-danger">*</span></label>
+                <input type="password" class="form-control" id="" placeholder="Digite a senha para o usuário" name="senha" required>
+            </div>
+            <div class="form-group">
+                <label for="">Nível de Acesso: <span class="text-danger">*</span></label>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="nivel" id="" value="1" checked="checked">
+                        Administrador
+                    </label>
+                    <label>
+                        <input type="radio" name="nivel" id="" value="2">
+                        Usuário
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success btn-lg">Cadastrar Usuário</button>
+        </form>
+
+        <hr>
+        <h2>Lista de Usuários</h2>
+        <br>
+
+        <% if(usuarios != null) { 
+                for(usuario of usuarios){ %>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Nome:
+                        <%= usuario.nome %>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        <li>Usuário: <%= usuario.usuario %></li>
+                        <li>Nível de Acesso: <%= usuario.nivel == 1 ? 'Administrador' : 'Usuário' %></li>
+                    </ul>
+                </div>
+                <div class="panel-footer container-fluid">
+                    <div class="col-md-6">
+
+                        <a href="/usuarios/<%= usuario._id %>" class="btn btn-primary btn-block">Editar</a>
+
+                    </div>
+                    <div class="col-md-6">
+
+                        <button type="button" class="btn btn-danger btn-block btn-delete" data-id="<%= usuario._id %>">Excluir Usuário</button>
+
+                    </div>
+                </div>
+            </div>
+            <% } } %>
+
+    </main>
+
+    <footer>
+    </footer>
+
+    <script src="./libs/jquery/jquery.min.js"></script>
+    <script src="./libs/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+
+        $('.btn-delete').click(function(){
+            var id = $(this).attr('data-id');
+
+            $.ajax({
+                method: 'DELETE',
+                url: '/usuarios/'+id,
+                dataType: 'json'
+            }).done(function(data){
+                if(data.error){
+                    alert('Erro! Não foi possivel deletar o usuário.')
+                }
+                    
+                window.location.reload();
+            });
+
+        });
+    </script>
+</body>
+
+</html>

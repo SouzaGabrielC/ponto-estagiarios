@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Relatórios - Ponto Estagiários</title>
+    <link rel="stylesheet" href="./libs/bootstrap/css/bootstrap.min.css">
+    <style>
+        .loader {
+            border: 16px solid #f3f3f3;
+            /* Light grey */
+            border-top: 16px solid #3498db;
+            /* Blue */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+        <nav class="navbar navbar-default" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Painel de Controle</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Início</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+    </header>
+
+    <main class="container">
+
+
+        <form id="formAtualizar" class="form-inline" role="form">
+            <div class="col-md-5">
+                <div class="form-group">
+                    <label for="">Data: </label>
+                    <input type="date" class="form-control" id="dtInicial" placeholder="Input field">
+                </div>
+
+                <div class="form-group ">
+                    <label for="">até</label>
+                    <input type="date" class="form-control" id="dtFinal" placeholder="Input field">
+                </div>
+            </div>
+
+            <div class="form-group col-md-5">
+                <label for="">Nome: </label>
+                <div class="input-group" style="width: 90%">
+                    <span class="input-group-btn" style="width: 40.02px;">
+                        <button class="btn btn-default" type="button" id="btnPrev">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                    </button>
+                    </span>
+                    <input type="text" class="form-control" disabled id="estagiarioField">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" id="btnNext">
+                            <span class="glyphicon glyphicon-chevron-right"></span>
+                    </button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-primary">Atualizar</button>
+            </div>
+            <div class="col-md-1">
+                <button type="button" class="btn btn-warning" id="imprimir">Imprimir</button>
+                <br>
+                <br>
+                <button type="button" class="btn btn-warning" id="imprimir-todos">Imprimir Todos</button>
+            </div>
+        </form>
+        <br>
+        <br>
+        <hr>
+        <br>
+        <div class="table-responsive">
+            <table class="table table-hove table-bordered">
+                <thead>
+                    <tr>
+                        <th>Dia</th>
+                        <th>Entrada 1</th>
+                        <th>Saída 1</th>
+                        <th>Entrada 2</th>
+                        <th>Saída 2</th>
+                        <th>Entrada 3</th>
+                        <th>Saída 3</th>
+                        <th>Hr. Trabalhada</th>
+                        <th>Débito</th>
+                        <th>Crédito</th>
+                        <th>Saldo Total</th>
+                    </tr>
+                </thead>
+                <tbody id="dados">
+                    <tr>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </main>
+
+    <footer>
+
+    </footer>
+
+    <div class="modal fade" id="batidaModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="batidaForm">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Registrar Batida Manual</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <input class="form-control" type="hidden" name="codigo" value="">
+
+                        <label for="">Data: </label>
+                        <input class="form-control" type="date" name="data" value="" disabled>
+                        <br>
+                        <label for="">Hora: </label>
+                        <input class="form-control" type="text" name="horario" value="">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Registrar Batida</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="bancoHorasModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="bancoHorasForm">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Modificação Banco de Horas</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <input class="form-control" type="hidden" name="codigo" value="">
+
+                        <label for="">Data: </label>
+                        <input class="form-control" type="date" name="data" value="" disabled>
+                        <br>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="tipo" value="sum">
+                                Somar
+                            </label>
+                            <label>
+                                <input type="radio" name="tipo" value="min">
+                                Subtrair
+                            </label>
+                        </div>
+                        <br>
+                        <label for="">Valor Hora: </label>
+                        <input class="form-control" type="text" name="horario" value="">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Realizar alteração</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="modal-loading">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body row">
+                    <div class="col-md-4 col-md-offset-4">
+                        <br>
+                        <br>
+                        <div class="loader"></div>
+                        <br>
+                        <br>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-loading2">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body row">
+                        <div class="col-md-4 col-md-offset-4">
+                            <br>
+                            <br>
+                            <div class="loader"></div>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <script src="./libs/jquery/jquery.min.js"></script>
+    <script src="./libs/jquery-mask/jquery.mask.min.js"></script>
+    <script src="./libs/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./libs/pdfmake/pdfmake.min.js"></script>
+    <script src="./javascripts/vfs_fonts.js"></script>
+    <script src="./javascripts/classes/Time.js"></script>
+    <script src="./javascripts/classes/Feriado.js"></script>
+    <script src="./javascripts/classes/Batida.js"></script>
+    <script src="./javascripts/classes/BancoHoras.js"></script>
+    <script src="./javascripts/classes/Estagiario.js"></script>
+    <script src="./javascripts/classes/Empresa.js"></script>
+    <script src="./javascripts/relatorio.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Feriados - Ponto Estagiários</title>
+    <link rel="stylesheet" href="./libs/bootstrap/css/bootstrap.min.css">
+    <style>
+        main {
+            padding: 2% 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: #333;
+            cursor: pointer
+        }
+
+        a:hover {
+            text-decoration: none;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+
+
+        <nav class="navbar navbar-default" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Painel de Controle</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="/">Início</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+
+    </header>
+
+    <main class="container">
+
+        <h2>Cadastro de Feriados</h2>
+        
+        <form action="" method="POST" role="form">
+            <small class="text-danger">* Campos Obrigatórios</small>
+            <div class="form-group">
+                <label for="">Nome do Feriado: <span class="text-danger">*</span></label>
+                <input type="text" name="nome" class="form-control" id="" placeholder="Digite um nome para o feriado" required>
+            </div>
+
+            <div class="form-group">
+                <label for="">Data inicial: <span class="text-danger">*</span></label>
+                <input type="date" name="dtInicial" class="form-control" id="" required>
+            </div>
+
+            <div class="form-group">
+                <label for="">Data final: <span class="text-danger">*</span></label>
+                <input type="date" name="dtFinal" class="form-control" id="" required>
+            </div>
+        
+            <button type="submit" class="btn btn-success btn-lg">Cadastrar Feriado</button>
+
+        </form>
+        
+        <hr>
+        <h2>Lista de Feriados</h2>
+        <br>
+
+        <% if(feriados != null) { 
+                for(feriado of feriados){ %>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Nome:
+                        <%= feriado.nome %>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        <li>Data inicial: <% if(feriado.dtInicial) { %><%= feriado.dtInicial.getUTCDate() %>/<%= feriado.dtInicial.getUTCMonth() +1%>/<%= feriado.dtInicial.getUTCFullYear() %><% } %></li>
+                        <li>Data final: <% if(feriado.dtFinal) { %><%= feriado.dtFinal.getUTCDate() %>/<%= feriado.dtFinal.getUTCMonth() +1%>/<%= feriado.dtFinal.getUTCFullYear() %><% } %></li>
+                    </ul>
+                </div>
+                <div class="panel-footer container-fluid">
+                    <div class="col-md-6 col-md-offset-6">
+
+                        <button type="button" class="btn btn-danger btn-block btn-delete" data-id="<%= feriado._id %>">Excluir Feriado</button>
+
+                    </div>
+                </div>
+            </div>
+            <% } } %>
+
+    </main>
+
+    <footer>
+    </footer>
+
+    <script src="./libs/jquery/jquery.min.js"></script>
+    <script src="./libs/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+    $('.btn-delete').click(function(){
+            var id = $(this).attr('data-id');
+
+            $.ajax({
+                method: 'DELETE',
+                url: '/feriados/'+id,
+                dataType: 'json'
+            }).done(function(data){
+                if(data.error){
+                    alert('Erro! Não foi possivel deletar o feriado.')
+                }
+                    
+                window.location.reload();
+            });
+
+        });
+    </script>
+</body>
+
+</html>
